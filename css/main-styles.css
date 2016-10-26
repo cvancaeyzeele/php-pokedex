@@ -1,0 +1,96 @@
+/* Default fonts for the application */
+/* Theme colours for the application */
+html, body {
+  height: 100%; }
+
+body {
+  background: #C0392B;
+  font-family: "Lato", sans-serif;
+  padding-top: 65px; }
+
+h1 {
+  color: #ECF0F1;
+  font-family: "Lato", sans-serif; }
+
+/* Disable default link styling from Bootstrap */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Used to vertically center elements */
+.vertical-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+.container {
+  max-width: 750px; }
+
+/* Styles for the Pokemon list cards */
+.pokemon-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  padding: 10px 16px;
+  margin: 20px auto;
+  width: 60%;
+  background-color: #ECF0F1;
+  text-transform: capitalize;
+  list-style: none;
+}
+
+.pokemon-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); }
+
+.pokemon-card img {
+  width: 120px; }
+
+/* Displays Pokemon card text next to the Pokemon sprite */
+.inlinetext {
+  display: inline-block;
+  padding-left: 40px;
+  height: 100%;
+  vertical-align: middle; }
+
+/* Displays name and number on separate lines */
+.name, .number {
+  display: block; }
+
+/* Styling for the search input box */
+.search-input {
+  padding: 10px 10px;
+  height: 52px;
+  position: relative;
+  width: 70%;
+  margin: auto; }
+
+.search-input::before {
+  content: "\26b2";
+  display: block;
+  position: absolute;
+  width: 15px;
+  z-index: 3;
+  height: 15px;
+  transform: rotate(-45deg);
+  font-size: 20px;
+  top: 11px;
+  left: 13px;
+  line-height: 32px; }
+
+.search-input > input {
+  width: 100%;
+  font-size: 18px;
+  border: none;
+  line-height: 22px;
+  padding: 5px 10px 5px 25px;
+  height: 32px;
+  position: relative; }
+
+.search-input > input:focus {
+  outline: none; }
