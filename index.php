@@ -1,12 +1,11 @@
 <?php
-  // URL for PokeAPI
-  $pokeapi_url = 'http://pokeapi.co/api/v2/pokemon/?limit=718';
+  include 'apicaching.php';
 
-  // Get JSON data from PokeAPI
-  $json_data = file_get_contents($pokeapi_url);
+  $pokeapi_url = 'http://pokeapi.co/api/v2/pokemon/?limit=1000';
 
   // Decode JSON into an array
-  $pokearray = json_decode($json_data, true);
+  $pokearray = json_cached_api_results(null, null, $pokeapi_url);
+  $pokearray = json_decode($pokearray, true);
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,34 +17,21 @@
     <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
   </head>
   <body>
-    <div id="navbar">
-      <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">Pok&eacute;Lookup</a>
-          </div>
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Type Checker</a></li>
-            <li><a href="#">Items</a></li>
-            <li><a href="#">Moves</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-
+    <? include 'header.php'; ?>
     <div id="pokemon-list">
-      <? foreach ($pokearray['results'] as $pokemon): ?>
-        <a href="pokemon.php?id=<?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?>">
-          <li class="pokemon-card">
-            <img src="img/sprites/<?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?>.png" />
-            <div class="inlinetext">
-              <h4 class="name"><?= $pokemon['name'] ?></h4>
-              <p class="number"><?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?></p>
-            </div>
-          </li>
-        </a>
-      <? endforeach; ?>
+      <ul>
+        <? foreach ($pokearray['results'] as $pokemon): ?>
+          <a href="pokemon.php?id=<?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?>">
+            <li class="pokemon-card">
+              <img src="img/sprites/<?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?>.png" />
+              <div class="inlinetext">
+                <h4 class="name"><?= $pokemon['name'] ?></h4>
+                <p class="number"><?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?></p>
+              </div>
+            </li>
+          </a>
+        <? endforeach; ?>
+      </ul>
     </div>
   </body>
 </html>
