@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     // Sanitize GET ID
     $pokemon_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -17,6 +19,11 @@
         <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
+        <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
     <? include 'header.php'; ?>
@@ -25,8 +32,22 @@
                 <li class="pokemon-card">
                     <img src="img/sprites/<?= $pokemon['id'] ?>.png" />
                     <div class="inlinetext">
-                        <h4 class="name"><?= $pokemon['name'] ?></h4>
-                        <p class="number"><?= $pokemon['id'] ?></p>
+                        <h2 class="name"><?= $pokemon['name'] ?> <small><?= $pokemon['id'] ?></small></h2>
+                        <div class="col-md-6">
+                            <h4>Base Stats</h4>
+                            <? foreach ($pokemon['stats'] as $stat): ?>
+                                <p><?= $stat['stat']['name'] ?> - <?= $stat['base_stat'] ?></p>
+                            <? endforeach; ?>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Abilities</h4>
+                            <? foreach ($pokemon['abilities'] as $abilities): ?>
+                                <p><?= $abilities['ability']['name'] ?></p>
+                            <? endforeach; ?>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Moves</h4>
+                        </div>
                     </div>
                 </li>
             </ul>

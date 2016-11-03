@@ -94,3 +94,7 @@ a:hover, a:focus {
 
 .search-input > input:focus {
   outline: none; }
+
+.navbar-text {
+  margin-right: 0;
+}
