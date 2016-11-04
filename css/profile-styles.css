@@ -1,5 +1,30 @@
-.panel {
+div.panel {
     width: 60%;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
 }
+
+ .img-rounded {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+}
+
+ .edit-btn {
+     position: absolute;
+     top: 130px;
+     right: 20px;
+ }
+
+ p.lead {
+     padding-top: 15px;
+ }
+
+ .realname {
+     margin-top: 0;
+ }
+
+ textarea {
+     resize: none;
+ }
