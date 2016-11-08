@@ -2,23 +2,37 @@
     require 'connect.php';
     session_start();
 
-    $page = 0;
+    if (isset($_GET['sortby'])) {
+        $sortby = filter_input(INPUT_GET, 'sortby', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $order;
 
-    if (isset($_GET['page'])) {
-        $pagevalue = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
-
-        if (isset($pagevalue)) {
-            $page = $pagevalue;
+        if (isset($_GET['order'])) {
+            $order = filter_input(INPUT_GET, 'order', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }
+
+        if (isset($order) && isset($sortby)) {
+            $postquery = "SELECT * FROM posts ORDER BY $sortby $order";
+            $poststatement = $db->prepare($postquery);
+            $poststatement->execute();
+            $posts = $poststatement->fetchAll();
+        } elseif (isset($sortby) && !isset($order)) {
+            $postquery = "SELECT * FROM posts ORDER BY $sortby ASC";
+            $poststatement = $db->prepare($postquery);
+            $poststatement->execute();
+            $posts = $poststatement->fetchAll();
+        } else {
+            $postquery = "SELECT * FROM posts ORDER BY datecreated DESC";
+            $poststatement = $db->prepare($postquery);
+            $poststatement->execute();
+            $posts = $poststatement->fetchAll();
+        }
+    } else {
+        $postquery = "SELECT * FROM posts ORDER BY datecreated DESC";
+        $poststatement = $db->prepare($postquery);
+        $poststatement->execute();
+        $posts = $poststatement->fetchAll();
     }
 
-    $postquery = "SELECT * FROM posts ORDER BY datecreated DESC LIMIT :start, 10";
-    $poststatement = $db->prepare($postquery);
-    $poststatement->bindValue(':start', $page, PDO::PARAM_INT);
-    $poststatement->execute();
-    $posts = $poststatement->fetchAll();
-
-    $page += 10;
 ?>
 <!doctype html>
 <html lang="en">
@@ -39,10 +53,23 @@
     <body>
         <? include 'header.php'; ?>
         <div class="panel panel-default">
+            <div class="btn-group dropdown">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="allposts.php?sortby=title&order=asc" id="title">Title | A-Z</a></li>
+                    <li><a href="allposts.php?sortby=title&order=desc" id="title">Title | Z-A</a></li>
+                    <li><a href="allposts.php?sortby=datecreated&order=asc" id="date-created">Date Created | Oldest First</a></li>
+                    <li><a href="allposts.php?sortby=datecreated&order=desc" id="date-created">Date Created | Newest First</a></li>
+                    <li><a href="allposts.php?sortby=category" id="category">Category</a></li>
+                </ul>
+            </div>
             <?php foreach ($posts as $post): ?>
                 <div class="post <?= $post['userid'] ?> <?= $post['category'] ?> <?= date( "m/d/y", strtotime($post['datecreated'])) ?>">
-                    <h2><a href="post.php?userid=<?= $post['userid'] ?>&postid=<?= $post['postid'] ?>"><?= $post['title'] ?></a></h2>
-                    <p><?= date("F j, Y g:i a", strtotime($post['datecreated'])); ?></p>
+                    <h2 class="post-title"><a href="post.php?userid=<?= $post['userid'] ?>&postid=<?= $post['postid'] ?>"><?= $post['title'] ?></a></h2>
+                    <p class="date"><?= date("F j, Y g:i a", strtotime($post['datecreated'])); ?></p>
+                    <p class="category capitalize"><?= $post['category'] ?></p>
                     <?php if (strlen($post['content']) > 200): ?>
                         <p><?= substr($post['content'],0,200) ?>... <a href="post.php?userid=<?= $post['userid'] ?>&postid=<?= $post['postid'] ?>">Full Post Here</a></p>
                     <?php else: ?>
@@ -50,16 +77,6 @@
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
-            <nav aria-label="...">
-                <ul class="pager">
-                    <?php if ($page != 10): ?>
-                        <li class="previous"><a href="allposts.php?page=<?= $page - 20 ?>"><span aria-hidden="true">&larr;</span> Newer</a></li>
-                    <?php endif; ?>
-                    <?php if (count($posts) >= 10): ?>
-                        <li class="next"><a href="allposts.php?page=<?= $page ?>">Older <span aria-hidden="true">&rarr;</span></a></li>
-                    <?php endif; ?>
-                </ul>
-            </nav>
         </div>
     </body>
 </html>

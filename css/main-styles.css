@@ -206,3 +206,26 @@ h4.inlinetext {
 .pokemon-list {
     padding: 0;
 }
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.dropdown {
+    float: right;
+    margin: 15px;
+}
+
+.post-title {
+    margin-top: 0;
+}
+
+.post {
+    margin: 15px;
+}
+
+.pages {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
