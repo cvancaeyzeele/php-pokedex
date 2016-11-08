@@ -9,6 +9,7 @@
                 <li class="<?php if(basename($_SERVER['PHP_SELF']) == 'typechecker.php') { echo 'active'; } ?>"><a href="typechecker.php">Type Checker</a></li>
                 <li class="<?php if(basename($_SERVER['PHP_SELF']) == 'items.php') { echo 'active'; } ?>"><a href="items.php">Items</a></li>
                 <li class="<?php if(basename($_SERVER['PHP_SELF']) == 'moves.php') { echo 'active'; } ?>"><a href="moves.php">Moves</a></li>
+                <li class="<?php if(basename($_SERVER['PHP_SELF']) == 'allposts.php') { echo 'active'; } ?>"><a href="allposts.php">Posts</a></li>
                 <?php if (isset($_SESSION['user'])): ?>
                     <li><a href="logout.php">Log Out</a></li>
                 <?php else: ?>

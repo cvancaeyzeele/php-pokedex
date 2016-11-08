@@ -1,0 +1,11 @@
+{
+    "name": "enragedbreakfast/php-pokedex",
+    "description": "A Pokedex app made in PHP",
+    "authors": [
+        {
+            "name": "Courtney VanCaeyzeele",
+            "email": "cvancaeyzeele@gmail.com"
+        }
+    ],
+    "require": {}
+}

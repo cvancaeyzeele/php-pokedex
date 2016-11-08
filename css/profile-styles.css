@@ -28,3 +28,25 @@ div.panel {
  textarea {
      resize: none;
  }
+
+div.user-comments {
+    display: none;
+}
+
+.well {
+    margin-top: 30px;
+}
+
+.new-post-btn {
+    float: right;
+}
+
+.edit-post {
+    position: absolute;
+    top: 25px;
+    right: 10px;
+}
+
+.post-heading:not(:first-child) {
+    padding-top: 15px;
+}

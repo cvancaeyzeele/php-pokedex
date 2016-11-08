@@ -30,7 +30,7 @@
                 <? foreach ($pokearray['results'] as $pokemon): ?>
                     <a href="pokemon.php?id=<?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?>">
                         <li class="pokemon-card">
-                            <img src="img/sprites/<?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?>.png" />
+                            <img src="img/sugimori/<?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?>.png" />
                             <div class="inlinetext">
                                 <h4 class="name"><?= $pokemon['name'] ?></h4>
                                 <p class="number"><?= substr(trim($pokemon['url'], '/'), strrpos(trim($pokemon['url'], '/'), '/')+1) ?></p>

@@ -14,6 +14,20 @@ function trim(str)
 }
 
 /*
+ * Hides all of the error elements.
+ */
+function hideErrors()
+{
+    // get all error messages by class name and put in an array
+    var errorFields = document.getElementsByClassName("help-block");
+
+    // loop through all error messages and set display style of each to "none"
+    for (var i = 0; i < errorFields.length; i++) {
+        errorFields[i].parentNode.removeChild(errorFields[i]);
+    }
+}
+
+/*
  * Handles the submit event of the survey form
  *
  * param e  A reference to the event object
@@ -164,8 +178,6 @@ function formHasErrors()
  */
 function onLoad() {
     document.getElementById("registrationform").addEventListener("submit", validate, false);
-
-
 }
 
 // Add document load event listener

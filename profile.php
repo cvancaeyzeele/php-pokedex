@@ -20,6 +20,18 @@
         $statement->bindValue(':username', $username);
         $statement->execute();
         $user = $statement->fetch();
+
+        $postquery = "SELECT * FROM posts WHERE userid = :userid ORDER BY datecreated DESC LIMIT 10";
+        $poststatement = $db->prepare($postquery);
+        $poststatement->bindValue(':userid', $user['userid']);
+        $poststatement->execute();
+        $posts = $poststatement->fetchAll();
+
+        $commentquery = "SELECT * FROM comments WHERE comments.userid = :userid ORDER BY datecreated DESC LIMIT 10";
+        $commentstatement = $db->prepare($commentquery);
+        $commentstatement->bindValue(':userid', $user['userid']);
+        $commentstatement->execute();
+        $comments = $commentstatement->fetchAll();
     }
 ?>
 <!doctype html>
@@ -37,6 +49,7 @@
             crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/f51889d3c4.js"></script>
+        <script src="js/profile.js"></script>
     </head>
     <body>
         <? include 'header.php'; ?>
@@ -60,7 +73,7 @@
                 <?php if (is_null($user['picture'])): ?>
                     <img src="https://api.adorable.io/avatars/80/<?= $user['userid'] ?>.png" alt="profile-picture" class="img-rounded" />
                 <?php else: ?>
-                    <img src="<?= 'data:image/jpeg;base64,'.base64_encode( $user['picture'] ) ?>" alt="profile-picture" class="img-rounded" />
+                    <img src="/img/user/<?= $user['picture'] ?>" alt="profile-picture" class="img-rounded" />
                 <?php endif; ?>
 
                 <!-- display bio if set, placeholder text if not -->
@@ -72,9 +85,39 @@
 
                 <!-- buttons to display posts or comments -->
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default">Posts</button>
-                    <button type="button" class="btn btn-default">Comments</button>
+                    <button type="button" class="btn btn-default" id="post-button">Posts</button>
+                    <button type="button" class="btn btn-default" id="comment-button">Comments</button>
                 </div>
+                
+                <!-- new post button -->
+                <?php if (isset($_SESSION['loggedin'])): ?>
+                    <?php if ($_SESSION['user'] === $user['username']): ?>
+                        <a href="newpost.php?id=<?= $user['userid'] ?>" class="btn btn-default new-post-btn" role="button">New Post <i class="fa fa-plus" aria-hidden="true"></i></a>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                <!-- posts created by user -->
+                <div class="user-posts well" id="user-posts">
+                    <?php foreach ($posts as $post): ?>
+                        <h4 class="post-heading"><a href="post.php?userid=<?= $user['userid'] ?>&postid=<?= $post['postid'] ?>"><?= $post['title'] ?></a></h4>
+                        <p><?= date("F j, Y g:i a", strtotime($post['datecreated'])); ?></p>
+                        <?php if (strlen($post['content']) > 200): ?>
+                            <p><?= substr($post['content'],0,200) ?>... <a href="post.php?userid=<?= $user['userid'] ?>&postid=<?= $post['postid'] ?>">Full Post Here</a></p>
+                        <?php else: ?>
+                            <p><?= $post['content'] ?></p>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- comments created by user -->
+                <div class="user-comments well" id="user-comments">
+                    <?php foreach ($comments as $comment): ?>
+                        <h4 class="post-heading"><a href="post.php?userid=<?= $post['userid'] ?>&postid=<?= $comment['postid'] ?>">Comment</a></h4>
+                        <p><?= date("F j, Y g:i a", strtotime($comment['datecreated'])); ?></p>
+                        <p><?= $comment['content'] ?></p>
+                    <?php endforeach; ?>
+                </div>
+
             <!-- warning message with link to login page if user not logged in and no id passed -->
             <?php else: ?>
                 <div class="alert alert-warning" role="alert">

@@ -25,7 +25,8 @@
         // TODO: set length restrictions on username, email, password
         if (isset($username) && isset($email) && isset($password) && isset($confirmpassword)
             && strlen($username) > 0 && strlen($email) > 0 && strlen($password) > 0
-            && strlen($confirmpassword) > 0 && filter_input(INPUT_POST, 'emailaddress', FILTER_VALIDATE_EMAIL) && ctype_alnum($username)) {
+            && strlen($confirmpassword) > 0 && filter_input(INPUT_POST, 'emailaddress', FILTER_VALIDATE_EMAIL) && ctype_alnum($username)
+            && $originalpassword == $confirmpassword) {
 
             // check if username and email are in use
             $usernameQuery = "SELECT username FROM users WHERE username = :username";
@@ -90,7 +91,7 @@
             if (strlen($originalpassword) == 0 && strlen($confirmpassword) == 0) {
                 $emptypassword = true;
             } elseif ($password != $confirmpassword) {
-                    $differentpasswords = true;
+                $differentpasswords = true;
             }
         }
     }
