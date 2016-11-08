@@ -196,3 +196,13 @@ h4.inlinetext {
     left: 15px;
     width: 120px;
 }
+
+.minisprite {
+    height: 48px;
+    max-width: 60px;
+    margin: 15px;
+}
+
+.pokemon-list {
+    padding: 0;
+}
