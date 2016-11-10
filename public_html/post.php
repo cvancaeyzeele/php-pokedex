@@ -1,14 +1,17 @@
 <?php
-    require 'connect.php';
+    // php file to connect to the database
+    require './../resources/library/connect.php';
     session_start();
 
+    // empty variable for validation
     $emptycontent = false;
 
+    // make sure postid and userid are passed via GET
     if (isset($_GET['postid']) && isset($_GET['userid'])) {
         $postid = filter_input(INPUT_GET, 'postid', FILTER_VALIDATE_INT);
         $userid = filter_input(INPUT_GET, 'userid', FILTER_VALIDATE_INT);
 
-        if (isset($postid)) {
+        if (isset($postid) && isset($userid)) {
             $query = "SELECT posts.*, users.* FROM posts, users WHERE postid = :postid && users.userid = :userid";
             $statement = $db->prepare($query);
             $statement->bindValue(':postid', $postid);
@@ -71,7 +74,7 @@
         <script src="https://use.fontawesome.com/f51889d3c4.js"></script>
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <?php if (isset($post['postid'])): ?>
                 <h2><?= $post['title'] ?> <small><a href="profile.php?id=<?= $post['username'] ?>"><?= $post['username'] ?></a></small></h2>

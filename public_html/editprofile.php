@@ -1,8 +1,10 @@
 <?php
-    require 'connect.php';
+    // php file to connect to the database
+    require './../resources/library/connect.php';
+
     session_start();
 
-    // make sure user is logged in
+    // make sure user is logged in and on their profile
     if (isset($_SESSION['loggedin'])) {
         $query = "SELECT * FROM users WHERE username = :username";
         $statement = $db->prepare($query);
@@ -11,10 +13,14 @@
         $user = $statement->fetch();
     }
 
+    // when user clicks save changes, validate changes and update user in the database
     if (isset($_POST['submit'])) {
+        // sanitize real name and bio fields
         $realname = filter_input(INPUT_POST, 'realname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $bio = filter_input(INPUT_POST, 'bio', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+        // to sum this up: if a field is empty, it is updated to null in database
+        // real name and bio CAN be empty if user chooses not to share that info
         if (isset($realname) && isset($bio)) {
             if (strlen($realname) < 1 && strlen($bio) > 0) { // if realname is empty update column to null
                 $update = "UPDATE users SET realname = NULL, bio = :bio WHERE username = :username";
@@ -42,6 +48,7 @@
                 $updateStatement->execute();
             }
 
+            // redirect user to their profile page
             header('Location: profile.php');
             exit();
         }
@@ -64,7 +71,7 @@
         <script src="https://use.fontawesome.com/f51889d3c4.js"></script>
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <!-- if user is logged in -->
             <?php if (isset($_SESSION['loggedin'])): ?>

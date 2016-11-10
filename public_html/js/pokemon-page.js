@@ -14,5 +14,11 @@ function onLoad() {
 
 }
 
+$(document).ready(function() {
+    $('#pokemon-moves').DataTable({
+        "bPaginate": false
+    });
+});
+
 // Add document load event listener
 document.addEventListener("DOMContentLoaded", onLoad, false);

@@ -1,5 +1,5 @@
 <?php
-    require 'connect.php';
+    require './../resources/library/connect.php';
     session_start();
 
     $emptytitle = false;
@@ -68,7 +68,7 @@
         <script src="js/postvalidate.js"></script>
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <?php if (isset($_SESSION['loggedin'])): ?>
                 <form method="post" action="" class="form" id="newpost">

@@ -1,5 +1,5 @@
 <?php
-    require 'connect.php';
+    require './../resources/library/connect.php';
     session_start();
 
     // if user is logged in and there is no id in url, profile shown will be theirs
@@ -52,7 +52,7 @@
         <script src="js/profile.js"></script>
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <!-- if user is logged in or id is passed through GET -->
             <?php if (isset($_SESSION['loggedin']) || isset($_GET['id'])): ?>
@@ -73,7 +73,7 @@
                 <?php if (is_null($user['picture'])): ?>
                     <img src="https://api.adorable.io/avatars/80/<?= $user['userid'] ?>.png" alt="profile-picture" class="img-rounded" />
                 <?php else: ?>
-                    <img src="/img/user/<?= $user['picture'] ?>" alt="profile-picture" class="img-rounded" />
+                    <img src="img/user/<?= $user['picture'] ?>" alt="profile-picture" class="img-rounded" />
                 <?php endif; ?>
 
                 <!-- display bio if set, placeholder text if not -->

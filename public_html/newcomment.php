@@ -1,5 +1,5 @@
 <?php
-    require 'connect.php';
+    require './../resources/library/connect.php';
     session_start();
 
     if (isset($_SESSION['loggedin']) && isset($_GET['id'])) {
@@ -29,7 +29,7 @@
         <script src="https://use.fontawesome.com/f51889d3c4.js"></script>
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <form method="post" action="" class="form">
 

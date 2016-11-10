@@ -1,5 +1,5 @@
 <?php
-    require 'connect.php';
+    require './../resources/library/connect.php';
     session_start();
 
     $validlogin = true;
@@ -57,7 +57,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <form method="post" action="">
                 <div class="alert alert-info" role="alert">

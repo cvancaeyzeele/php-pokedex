@@ -1,4 +1,7 @@
 <?php
+    // php file containing information about each generation of games
+    include './../resources/library/game_info.php';
+
     session_start();
 
     // Sanitize GET ID
@@ -26,15 +29,17 @@
         <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
         <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
             crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="js/pokemon-page.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     </head>
     <body>
-    <? include 'header.php'; ?>
+    <? include './../resources/templates/header.php'; ?>
         <div id="pokemon-list">
             <ul>
                 <li class="pokemon-card">
@@ -88,7 +93,7 @@
 
                     </div>
                     <h4 class="inlinetext">Moves</h4>
-                    <table class="table-hover table moves">
+                    <table class="table-hover table moves" id="pokemon-moves">
                         <thead>
                         <tr>
                             <td>Move</td>

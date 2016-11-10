@@ -17,7 +17,7 @@
 function json_cached_api_results( $cache_file = NULL, $expires = NULL, $pokeapi_url ) {
     global $request_type, $purge_cache, $limit_reached, $request_limit;
 
-    if( !$cache_file ) $cache_file = dirname(__FILE__) . '/api-cache.json';
+    if( !$cache_file ) $cache_file = dirname(__FILE__) . '/../cache/api-cache.json';
     if( !$expires) $expires = time() - 2*60*60;
 
     if( !file_exists($cache_file) ) die("Cache file is missing: $cache_file");
@@ -47,7 +47,7 @@ function json_cached_api_results( $cache_file = NULL, $expires = NULL, $pokeapi_
 function json_cached_api_results_items( $cache_file = NULL, $expires = NULL, $pokeapi_url ) {
     global $request_type, $purge_cache, $limit_reached, $request_limit;
 
-    if( !$cache_file ) $cache_file = dirname(__FILE__) . '/items-api-cache.json';
+    if( !$cache_file ) $cache_file = dirname(__FILE__) . '/../cache/items-api-cache.json';
     if( !$expires) $expires = time() - 2*60*60;
 
     if( !file_exists($cache_file) ) die("Cache file is missing: $cache_file");
@@ -77,7 +77,7 @@ function json_cached_api_results_items( $cache_file = NULL, $expires = NULL, $po
 function json_cached_api_results_moves( $cache_file = NULL, $expires = NULL, $pokeapi_url ) {
     global $request_type, $purge_cache, $limit_reached, $request_limit;
 
-    if( !$cache_file ) $cache_file = dirname(__FILE__) . '/moves-api-cache.json';
+    if( !$cache_file ) $cache_file = dirname(__FILE__) . '/../cache/moves-api-cache.json';
     if( !$expires) $expires = time() - 2*60*60;
 
     if( !file_exists($cache_file) ) die("Cache file is missing: $cache_file");

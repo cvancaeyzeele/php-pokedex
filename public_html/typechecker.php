@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
 
         </div>

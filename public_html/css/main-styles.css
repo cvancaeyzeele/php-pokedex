@@ -112,7 +112,7 @@ a:hover, a:focus {
     margin-right: 0;
 }
 
-div.panel {
+div.panel-default {
     width: 60%;
     margin: 0 auto;
     padding: 20px;
@@ -166,15 +166,10 @@ h2.name {
 table {
     display: block;
     width: 100%;
-    margin: 20px;
-    margin-left: 120px;
-    margin-top: 0;
-    padding-left: 55px;
+    margin: 0 !important;
 }
 
-td {
-    width: 33%;
-}
+
 
 td {
     text-transform: capitalize;
@@ -207,7 +202,7 @@ h4.inlinetext {
     padding: 0;
 }
 
-.capitalize {
+span.capitalize, .capitalize {
     text-transform: capitalize;
 }
 
@@ -228,4 +223,34 @@ h4.inlinetext {
     position: absolute;
     bottom: 0;
     width: 100%;
+}
+
+.options {
+    position: fixed;
+    top: 70px;
+    right: 10px;
+    margin: 5px;
+}
+
+.options>form>select {
+    width: 120px;
+    margin: 10px 15px;
+}
+
+.options>form>button {
+    margin: 0 15px;
+    margin-bottom: 10px;
+    width: 120px;
+}
+
+.dataTables_wrapper {
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 176px;
+    margin-top: 10px;
+}
+
+#pokemon-moves_filter {
+    float: none;
+    text-align: left;
 }

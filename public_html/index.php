@@ -1,8 +1,10 @@
 <?php
-    include 'apicaching.php';
+    // php file to cache results from pokeapi
+    include './../resources/library/apicaching.php';
 
     session_start();
 
+    // gets all pokemon (718 currently, will increase when new games come out)
     $pokeapi_url = 'http://pokeapi.co/api/v2/pokemon/?limit=718';
 
     // Decode JSON into an array
@@ -24,7 +26,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div id="pokemon-list">
             <ul>
                 <? foreach ($pokearray['results'] as $pokemon): ?>

@@ -1,5 +1,5 @@
 <?php
-    require 'connect.php';
+    require './../resources/library/connect.php';
     session_start();
 
     $usernameTaken = false;
@@ -113,7 +113,7 @@
         <script src="js/validate.js"></script>
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <form method="post" action="" id="registrationform">
                 <div class="alert alert-info" role="alert">

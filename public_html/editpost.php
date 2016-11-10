@@ -1,32 +1,42 @@
 <?php
-    require 'connect.php';
+    // php file to connect to the database
+    require './../resources/library/connect.php';
+
     session_start();
 
+    // create empty variables for validation
     $emptytitle = false;
     $emptycontent = false;
 
     date_default_timezone_set('America/Winnipeg');
 
+    // if user is logged in and userid and postid are passed via GET
     if (isset($_SESSION['loggedin']) && isset($_GET['userid']) && isset($_GET['postid'])) {
+        // validate passed GET parameters
         $userid = filter_input(INPUT_GET, 'userid', FILTER_VALIDATE_INT);
         $postid = filter_input(INPUT_GET, 'postid', FILTER_VALIDATE_INT);
 
+        // find user using userid
         $query = "SELECT * FROM users WHERE userid = :userid";
         $statement = $db->prepare($query);
         $statement->bindValue(':userid', $userid);
         $statement->execute();
         $user = $statement->fetch();
 
+        // find post using postid
         $postquery = "SELECT * FROM posts WHERE postid = :postid";
         $poststatement = $db->prepare($postquery);
         $poststatement->bindValue(':postid', $postid);
         $poststatement->execute();
         $post = $poststatement->fetch();
 
+        // when user clicks save post, validate changes and update the post in the database
         if (isset($_POST['submit'])) {
+            // sanitize title and content
             $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+            // if title and content fields are not empty
             if (isset($title) && isset($content) && strlen($title) > 0 && strlen($content) > 0) {
                 $update = "UPDATE posts SET title = :title, content = :content WHERE postid = :postid";
                 $updateStatement = $db->prepare($update);
@@ -35,10 +45,11 @@
                 $updateStatement->bindValue(':postid', $postid);
                 $updateStatement->execute();
 
+                // redirect user to the updated post's page
                 header('Location: post.php?userid='.$userid.'&postid='.$postid);
                 exit();
 
-            } else {
+            } else { // if there are errors display messages
                 if (strlen($title) == 0) {
                     $emptytitle = true;
                 }
@@ -68,7 +79,7 @@
         <script src="js/postvalidate.js"></script>
     </head>
     <body>
-        <? include 'header.php'; ?>
+        <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <?php if (isset($_SESSION['loggedin']) && isset($_GET['userid']) && isset($_GET['postid']) && $_SESSION['user'] == $user['username']): ?>
                 <form method="post" action="" class="form" id="newpost">
