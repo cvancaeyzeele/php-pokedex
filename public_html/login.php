@@ -4,6 +4,8 @@
 
     $validlogin = true;
     $emptyfields = false;
+    $banned = false;
+    $suspended = false;
 
     date_default_timezone_set('America/Winnipeg');
 
@@ -23,10 +25,20 @@
             if (count($matchingUser) > 0) {
                 // if password is correct create session variables and redirect to index.php
                 if (password_verify($password, $matchingUser['password'])) {
-                    $_SESSION['user'] = $matchingUser['username'];
-                    $_SESSION['loggedin'] = true;
-                    header("Location: index.php");
-                    exit();
+
+                    // check if user is banned or suspended
+                    if ($matchingUser['status'] == 'banned') {
+                        $banned = true;
+                    } elseif ($matchingUser['status'] == 'suspended') {
+                        $suspended = true;
+                    } else {
+                        $_SESSION['user'] = $matchingUser['username'];
+                        $_SESSION['loggedin'] = true;
+                        $_SESSION['userrole'] = $matchingUser['roleid'];
+
+                        header("Location: index.php");
+                        exit();
+                    }
                 } else {
                     // set variable to false to show error message
                     $validlogin = false;
@@ -47,9 +59,7 @@
         <title>Pok&eacute;Lookup</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
-        <link rel="stylesheet" type="text/css" href="css/form-styles.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -63,6 +73,15 @@
                 <div class="alert alert-info" role="alert">
                     <p>Don't have an account? Sign up <a href="register.php" class="alert-link">here!</a></p>
                 </div>
+                <?php if ($banned): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <p>Your account has been banned.</p>
+                    </div>
+                <?php elseif ($suspended): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <p>Your account has been suspended.</p>
+                    </div>
+                <?php endif; ?>
                 <?php if (!$validlogin): ?>
                     <p class="text-danger">Invalid username or password.</p>
                 <?php endif; ?>

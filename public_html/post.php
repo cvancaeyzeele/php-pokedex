@@ -63,9 +63,7 @@
         <title>Pok&eacute;Lookup</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
-        <link rel="stylesheet" type="text/css" href="css/profile-styles.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -77,7 +75,7 @@
         <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <?php if (isset($post['postid'])): ?>
-                <h2><?= $post['title'] ?> <small><a href="profile.php?id=<?= $post['username'] ?>"><?= $post['username'] ?></a></small></h2>
+                <h2 class="post-title"><?= $post['title'] ?> <small><a href="profile.php?id=<?= $post['username'] ?>"><?= $post['username'] ?></a></small></h2>
 
                 <?php if (isset($_SESSION['user'])): ?>
                     <?php if ($post['username'] == $_SESSION['user']): ?>

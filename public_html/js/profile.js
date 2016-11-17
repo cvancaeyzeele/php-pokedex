@@ -1,3 +1,4 @@
+// shows the div containing list of posts by the user and hides comments div
 function showPosts() {
     var postDiv = document.getElementById("user-posts");
     var commentDiv = document.getElementById("user-comments");
@@ -6,6 +7,7 @@ function showPosts() {
     commentDiv.style.display = "none";
 }
 
+// shows the div containing list of comments by the user and hides post div
 function showComments() {
     var postDiv = document.getElementById("user-posts");
     var commentDiv = document.getElementById("user-comments");

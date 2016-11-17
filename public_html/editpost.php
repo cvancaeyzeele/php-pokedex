@@ -58,6 +58,18 @@
                     $emptycontent = true;
                 }
             }
+        }  elseif (isset($_POST['delete'])) {
+            $postid = filter_input(INPUT_GET, 'postid', FILTER_VALIDATE_INT);
+
+            if ($postid !== false) {
+                $delete = "DELETE FROM posts WHERE postid = :postid";
+                $deleteStatement = $db->prepare($delete);
+                $deleteStatement->bindValue(':postid', $postid);
+                $deleteStatement->execute();
+
+                header('Location: allposts.php');
+                exit();
+            }
         }
     }
 ?>
@@ -67,9 +79,7 @@
         <title>Pok&eacute;Lookup</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
-        <link rel="stylesheet" type="text/css" href="css/form-styles.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -98,6 +108,7 @@
                         <?php endif; ?>
                     </div>
                     <input type="submit" name="submit" class="btn btn-default" value="Save post" />
+                    <input type="submit" name="delete" class="btn btn-default" value="Delete Post" />
                 </form>
             <?php elseif (!isset($_SESSION['loggedin'])): ?>
                 <div class="alert alert-warning" role="alert">

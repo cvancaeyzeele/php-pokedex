@@ -1,0 +1,9 @@
+// Hide list of posts on the admin page by default
+div.post-list, div.banned-user-list {
+  display: none;
+}
+
+// Spacing for "Select All" toggle
+.select-all {
+  margin-bottom: 30px;
+}

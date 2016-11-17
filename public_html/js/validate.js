@@ -81,10 +81,10 @@ function formHasErrors()
     var confirmpassword = document.getElementById("confirmpassword");
 
     // regex for username
-    var pattern = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/); //unacceptable characters
+    var pattern = /^[A-Za-z0-9_-]{3,25}$/;
 
     // regex for email
-    var emailpattern = new RegExp(/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/);
+    var emailpattern = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/;
 
     // if no username is entered
     if (trim(username.value) == '') {
@@ -100,13 +100,13 @@ function formHasErrors()
         span.className = "help-block";
 
         hasErrors = true;
-    } else if (pattern.test(username.value)) { // if username contains special characters
+    } else if (!pattern.test(username.value)) { // if username contains special characters
         // add class to show error
         username.parentNode.className += " has-error";
 
         // create new element
         var span = document.createElement("span");
-        var node = document.createTextNode("Username cannot contain special characters.");
+        var node = document.createTextNode("Username cannot contain special characters and must be less than 25 characters.");
         span.appendChild(node);
         username.parentNode.appendChild(span);
         span.id = "helpBlock";
@@ -126,7 +126,7 @@ function formHasErrors()
         span.className = "help-block";
 
         hasErrors = true;
-    } else if (emailpattern.test(email.value)) { // if email address is invalid
+    } else if (!emailpattern.test(email.value)) { // if email address is invalid
         // add class to show error
         email.parentNode.className += " has-error";
 

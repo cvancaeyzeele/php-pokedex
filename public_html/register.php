@@ -14,7 +14,7 @@
     date_default_timezone_set('America/Winnipeg');
 
     if (isset($_POST['submit'])) {
-        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $username = filter_input(INPUT_POST, 'username', FILTER_VALIDATE_REGEXP,  array("options"=>array("regexp"=>"/^[A-Za-z0-9_-]{3,25}$/")));
         $email = filter_input(INPUT_POST, 'emailaddress', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $originalpassword = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $confirmpassword = filter_input(INPUT_POST, 'confirmpassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -72,10 +72,10 @@
             }
         } else {
             // if no username is entered
-            if (strlen($username) == 0) {
-                $emptyusername = true;
-            } elseif (!ctype_alnum($username)) {
+            if ($username == false) {
                 $invalidusername = true;
+            } elseif (strlen($username) == 0) {
+                $emptyusername = true;
             }
 
             $emailcheck = filter_input(INPUT_POST, 'emailaddress', FILTER_VALIDATE_EMAIL);
@@ -90,7 +90,7 @@
             // if no password is entered or passwords do not match
             if (strlen($originalpassword) == 0 && strlen($confirmpassword) == 0) {
                 $emptypassword = true;
-            } elseif ($password != $confirmpassword) {
+            } elseif ($originalpassword != $confirmpassword) {
                 $differentpasswords = true;
             }
         }
@@ -102,9 +102,7 @@
         <title>Pok&eacute;Lookup</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
-        <link rel="stylesheet" type="text/css" href="css/form-styles.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -127,7 +125,7 @@
                     <?php elseif ($emptyusername): ?>
                         <span id="helpBlock" class="help-block">Please enter a username.</span>
                     <?php elseif ($invalidusername): ?>
-                        <span id="helpBlock" class="help-block">Username cannot contain special characters.</span>
+                        <span id="helpBlock" class="help-block">Username cannot contain special characters and must be less than 25 characters.</span>
                     <?php endif; ?>
                 </div>
                 <div class="form-group <?php if ($emailTaken || $emptyemail || $invalidemail) echo 'has-error'; ?>">

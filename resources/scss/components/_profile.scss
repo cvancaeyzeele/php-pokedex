@@ -1,0 +1,46 @@
+div.panel-default {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+}
+
+// Styling for the profile picture
+.img-rounded {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+}
+
+// Edit button for profile page
+.edit-btn, .edit-post {
+  position: absolute;
+  top: 130px;
+  right: 20px;
+}
+
+// Styling for p.lead, used for the bio
+p.lead {
+  padding-top: 15px;
+}
+
+// Styling for the user's real name
+.realname {
+  margin-top: 0;
+}
+
+// Styling for the textarea when editing profile; set it to non-resizable
+textarea {
+  resize: none;
+}
+
+// Comments created by the user; set to none by default, displayed when button is clicked
+div.user-comments {
+  display: none;
+}
+
+// Div containing the user posts/comments, depending which link is clicked
+.well {
+  margin-top: 30px;
+}
+

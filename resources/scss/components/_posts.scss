@@ -1,0 +1,35 @@
+// Formatting for comment headings
+.comment-heading {
+  padding-top: 20px;
+}
+
+// Styling for each post on allposts.php
+.post {
+  margin: 15px;
+}
+
+// Styling for the options panel in allposts.php
+.options {
+  position: fixed;
+  top: 70px;
+  right: 10px;
+  margin: 5px;
+}
+
+.options>form>select {
+  width: 120px;
+  margin: 10px 15px;
+}
+
+.options>form>button {
+  margin: 0 15px;
+  margin-bottom: 10px;
+  width: 120px;
+}
+
+// Edit post button on post page
+a.edit-post {
+  position: absolute;
+  top: 25px;
+  right: 10px;
+}

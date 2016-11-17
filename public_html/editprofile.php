@@ -34,7 +34,7 @@
                 $updateStatement->bindValue(':username', $_SESSION['user']);
                 $updateStatement->bindValue(':realname', $realname);
                 $updateStatement->execute();
-            } elseif (strlen($bio) < 1 && strlen($$realname) < 1) { // if both are empty ....
+            } elseif (strlen($bio) < 1 && strlen($realname) < 1) { // if both are empty ....
                 $update = "UPDATE users SET realname = NULL, bio = NULL WHERE username = :username";
                 $updateStatement = $db->prepare($update);
                 $updateStatement->bindValue(':username', $_SESSION['user']);
@@ -49,7 +49,7 @@
             }
 
             // redirect user to their profile page
-            header('Location: profile.php');
+            header('Location: profile.php?id='.$_SESSION['user']);
             exit();
         }
     }
@@ -60,9 +60,7 @@
         <title>Pok&eacute;Lookup</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
-        <link rel="stylesheet" type="text/css" href="css/profile-styles.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="

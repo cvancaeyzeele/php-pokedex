@@ -1,0 +1,17 @@
+// Default fonts for the site
+$font-stack: Lato, sans-serif;
+
+// Colors
+$dark-red:  #C0392B;
+$red:       #E74C3C;
+$off-white: #ECF0F1;
+$grey:      #BDC3C7;
+$dark-grey: #34495E;
+
+// Panel formatting
+div.panel-default {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+}

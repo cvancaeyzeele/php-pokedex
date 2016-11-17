@@ -2,10 +2,12 @@
     require './../resources/library/connect.php';
     session_start();
 
+    $userfound = false;
+
     // if user is logged in and there is no id in url, profile shown will be theirs
     // if user is not logged in and there is no id in url, error and link to log in will be shown
     // if there is an id in url, that profile will be shown regardless if user is logged in or not
-    if (isset($_SESSION['loggedin']) || isset($_GET['id'])) {
+    if (isset($_GET['id'])) {
         $username;
 
         // make sure a username is included in page url
@@ -21,17 +23,21 @@
         $statement->execute();
         $user = $statement->fetch();
 
-        $postquery = "SELECT * FROM posts WHERE userid = :userid ORDER BY datecreated DESC LIMIT 10";
-        $poststatement = $db->prepare($postquery);
-        $poststatement->bindValue(':userid', $user['userid']);
-        $poststatement->execute();
-        $posts = $poststatement->fetchAll();
+        if ($user['status'] != 'banned' && $user['status'] != 'suspended' && $user != false) {
+            $postquery = "SELECT * FROM posts WHERE userid = :userid ORDER BY datecreated DESC LIMIT 10";
+            $poststatement = $db->prepare($postquery);
+            $poststatement->bindValue(':userid', $user['userid']);
+            $poststatement->execute();
+            $posts = $poststatement->fetchAll();
 
-        $commentquery = "SELECT * FROM comments WHERE comments.userid = :userid ORDER BY datecreated DESC LIMIT 10";
-        $commentstatement = $db->prepare($commentquery);
-        $commentstatement->bindValue(':userid', $user['userid']);
-        $commentstatement->execute();
-        $comments = $commentstatement->fetchAll();
+            $commentquery = "SELECT * FROM comments WHERE comments.userid = :userid ORDER BY datecreated DESC LIMIT 10";
+            $commentstatement = $db->prepare($commentquery);
+            $commentstatement->bindValue(':userid', $user['userid']);
+            $commentstatement->execute();
+            $comments = $commentstatement->fetchAll();
+
+            $userfound = true;
+        }
     }
 ?>
 <!doctype html>
@@ -40,9 +46,7 @@
         <title>Pok&eacute;Lookup</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/main-styles.css" />
-        <link rel="stylesheet" type="text/css" href="css/profile-styles.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -55,7 +59,7 @@
         <? include './../resources/templates/header.php'; ?>
         <div class="panel panel-default">
             <!-- if user is logged in or id is passed through GET -->
-            <?php if (isset($_SESSION['loggedin']) || isset($_GET['id'])): ?>
+            <?php if ($userfound == true): ?>
                 <h2><?= $user['username'] ?></h2>
                 <!-- display real name if set -->
                 <?php if (!is_null($user['realname'])): ?>
@@ -121,7 +125,7 @@
             <!-- warning message with link to login page if user not logged in and no id passed -->
             <?php else: ?>
                 <div class="alert alert-warning" role="alert">
-                    <p>Please <a href="login.php" class="alert-link">log in.</a></p>
+                    <p>No user found.</p>
                 </div>
             <?php endif; ?>
         </div>

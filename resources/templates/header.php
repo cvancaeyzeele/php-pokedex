@@ -15,6 +15,11 @@
                 <?php else: ?>
                     <li><a href="login.php">Log In</a></li>
                 <?php endif; ?>
+                <?php if (isset($_SESSION['userrole'])): ?>
+                    <?php if ($_SESSION['userrole'] < 4): ?>
+                        <li><a href="admin.php">Admin</a></li>
+                    <?php endif; ?>
+                <?php endif; ?>
             </ul>
             <?php if (isset($_SESSION['loggedin'])): ?>
                 <p class="navbar-text navbar-right"><a href="profile.php?id=<?= $_SESSION['user'] ?>">Signed in as <?= $_SESSION['user'] ?></a></p>
